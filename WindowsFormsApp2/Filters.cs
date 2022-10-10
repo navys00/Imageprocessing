@@ -365,6 +365,21 @@ namespace WindowsFormsApp2
             return resultImage;
 
         }
+        public int[] CalculateHistogram(Bitmap image)
+        {
+            int[] histogram = new int[256];
+            for(int x = 0; x < image.Width; x++)
+            {
+                for(int y = 0; y < image.Height; y++)
+                {
+                    Color color = image.GetPixel(x, y);
+                    histogram[color.R]++;
+                }
+            }
+
+
+            return histogram;
+        }
     }
 }
 
