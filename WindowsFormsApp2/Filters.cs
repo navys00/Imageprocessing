@@ -202,16 +202,71 @@ namespace WindowsFormsApp2
             return resultImage;
 
         }
-        public Bitmap Niblack(Bitmap source)
+        public Bitmap Niblack(Bitmap source)//бинаризация Ниблэка
         {
             Bitmap resultimage = new Bitmap(source.Width, source.Height);
+            for(int x = 0; x < source.Width; x++)
+            {
+                for(int y = 0; y < source.Height; y++)
+                {
+                    Color color = NiblackPixelColor(source, x, y);
+                    resultimage.SetPixel(x, y, color);
+                    
 
-
-
+                }
+            }
 
             return resultimage;
         }
+        public Color NiblackPixelColor(Bitmap source, int x,int y)
+        {
+            float K = -0.2f; //пользовательский параметр
+            int radius = 1;
+            int W = (1 + 2 * radius) * (1 + 2 * radius);//размер матрицы w^2
+            int m;//среднее значение серого
+            int s;//стандартное отклонение 
+            int brightsum = 0;//сумма яркостей
+            int T; //порог
+            for(int i = -radius; i <= radius; i++)
+            {
+                for(int j = -radius; j <= radius; j++)
+                {
+                    int idX = Clamp(x + i, 0, source.Width-1);
+                    int idY= Clamp(y + j, 0, source.Height-1);
+                    Color color1 = source.GetPixel(idX, idY);
+                    brightsum += (int)color1.R;
+                    
+                }
+            }
+            m = (int)(brightsum / W);
+            brightsum = 0;
+            for (int i = -radius; i <= radius; i++)
+            {
+                for (int j = -radius; j <= radius; j++)
+                {
+                    int idX = Clamp(x + i, 0, source.Width - 1);
+                    int idY = Clamp(y + j, 0, source.Height - 1);
+                    Color color2 = source.GetPixel(idX, idY);
+                    brightsum += (int)Math.Pow(color2.R - m, 2);
 
+                }
+            }
+            s = (int)Math.Sqrt(brightsum / W);
+            brightsum = 0;
+
+            T = (int)(m + s * K);
+
+            Color color = source.GetPixel(x, y);
+            if (color.R >= T)
+            {
+                return Color.FromArgb((int)255, (int)255, (int)255);
+
+            }
+            else
+            {
+                return Color.FromArgb((int)0, (int)0, (int)0);
+            }
+        }
         public Bitmap Threshold(Bitmap source, int value)//установка порога вручную
         {
             Bitmap resultimage = new Bitmap(source.Width, source.Height);
@@ -237,6 +292,7 @@ namespace WindowsFormsApp2
             }
             return resultimage;
         }
+        
         public Bitmap ottenki_serogo(Bitmap source)//оттенки серого
         {
             Bitmap resultImage = new Bitmap(source.Width, source.Height);

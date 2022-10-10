@@ -97,19 +97,27 @@ namespace WindowsFormsApp2
             pictureBox1.Image = resultImage;
             pictureBox1.Refresh();
         }
-
-        private void thresholdToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Filter filter = new Filter();
-            Bitmap resultImage = filter.Threshold(image,150);
-            pictureBox1.Image = resultImage;
-            pictureBox1.Refresh();
-        }
-
+   
         private void оттенкиСерогоToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             Filter filter = new Filter();
             Bitmap resultImage = filter.ottenki_serogo(image);
+            pictureBox1.Image = resultImage;
+            pictureBox1.Refresh();
+        }
+
+        private void thresholdToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            Filter filter = new Filter();
+            Bitmap resultImage = filter.Threshold(image, 150);
+            pictureBox1.Image = resultImage;
+            pictureBox1.Refresh();
+        }
+
+        private void ниблэкToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Filter filter = new Filter();
+            Bitmap resultImage = filter.Niblack(image);
             pictureBox1.Image = resultImage;
             pictureBox1.Refresh();
         }

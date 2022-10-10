@@ -37,12 +37,14 @@ namespace WindowsFormsApp2
             this.фильтрыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.точечныеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.оттенкиСерогоToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.оттенкиСерогоToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.матричныеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.медианныйToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.autocontrastToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.бинаризацияToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ниблэкToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.thresholdToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.оттенкиСерогоToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -61,7 +63,8 @@ namespace WindowsFormsApp2
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.файлToolStripMenuItem,
-            this.фильтрыToolStripMenuItem});
+            this.фильтрыToolStripMenuItem,
+            this.бинаризацияToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1031, 28);
@@ -105,7 +108,6 @@ namespace WindowsFormsApp2
             // 
             this.точечныеToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.оттенкиСерогоToolStripMenuItem,
-            this.thresholdToolStripMenuItem,
             this.оттенкиСерогоToolStripMenuItem1});
             this.точечныеToolStripMenuItem.Name = "точечныеToolStripMenuItem";
             this.точечныеToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
@@ -118,6 +120,13 @@ namespace WindowsFormsApp2
             this.оттенкиСерогоToolStripMenuItem.Text = "grayscale";
             this.оттенкиСерогоToolStripMenuItem.Click += new System.EventHandler(this.оттенкиСерогоToolStripMenuItem_Click);
             // 
+            // оттенкиСерогоToolStripMenuItem1
+            // 
+            this.оттенкиСерогоToolStripMenuItem1.Name = "оттенкиСерогоToolStripMenuItem1";
+            this.оттенкиСерогоToolStripMenuItem1.Size = new System.Drawing.Size(224, 26);
+            this.оттенкиСерогоToolStripMenuItem1.Text = "оттенки серого";
+            this.оттенкиСерогоToolStripMenuItem1.Click += new System.EventHandler(this.оттенкиСерогоToolStripMenuItem1_Click);
+            // 
             // матричныеToolStripMenuItem
             // 
             this.матричныеToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -129,7 +138,7 @@ namespace WindowsFormsApp2
             // медианныйToolStripMenuItem
             // 
             this.медианныйToolStripMenuItem.Name = "медианныйToolStripMenuItem";
-            this.медианныйToolStripMenuItem.Size = new System.Drawing.Size(145, 26);
+            this.медианныйToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.медианныйToolStripMenuItem.Text = "average";
             this.медианныйToolStripMenuItem.Click += new System.EventHandler(this.медианныйToolStripMenuItem_Click);
             // 
@@ -140,23 +149,32 @@ namespace WindowsFormsApp2
             this.autocontrastToolStripMenuItem.Text = "autocontrast";
             this.autocontrastToolStripMenuItem.Click += new System.EventHandler(this.autocontrastToolStripMenuItem_Click);
             // 
-            // backgroundWorker1
+            // бинаризацияToolStripMenuItem
             // 
-            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            this.бинаризацияToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ниблэкToolStripMenuItem,
+            this.thresholdToolStripMenuItem});
+            this.бинаризацияToolStripMenuItem.Name = "бинаризацияToolStripMenuItem";
+            this.бинаризацияToolStripMenuItem.Size = new System.Drawing.Size(117, 24);
+            this.бинаризацияToolStripMenuItem.Text = "бинаризация";
+            // 
+            // ниблэкToolStripMenuItem
+            // 
+            this.ниблэкToolStripMenuItem.Name = "ниблэкToolStripMenuItem";
+            this.ниблэкToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.ниблэкToolStripMenuItem.Text = "Ниблэк";
+            this.ниблэкToolStripMenuItem.Click += new System.EventHandler(this.ниблэкToolStripMenuItem_Click);
             // 
             // thresholdToolStripMenuItem
             // 
             this.thresholdToolStripMenuItem.Name = "thresholdToolStripMenuItem";
             this.thresholdToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.thresholdToolStripMenuItem.Text = "threshold";
-            this.thresholdToolStripMenuItem.Click += new System.EventHandler(this.thresholdToolStripMenuItem_Click);
+            this.thresholdToolStripMenuItem.Click += new System.EventHandler(this.thresholdToolStripMenuItem_Click_1);
             // 
-            // оттенкиСерогоToolStripMenuItem1
+            // backgroundWorker1
             // 
-            this.оттенкиСерогоToolStripMenuItem1.Name = "оттенкиСерогоToolStripMenuItem1";
-            this.оттенкиСерогоToolStripMenuItem1.Size = new System.Drawing.Size(224, 26);
-            this.оттенкиСерогоToolStripMenuItem1.Text = "оттенки серого";
-            this.оттенкиСерогоToolStripMenuItem1.Click += new System.EventHandler(this.оттенкиСерогоToolStripMenuItem1_Click);
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
             // 
             // Form1
             // 
@@ -191,8 +209,10 @@ namespace WindowsFormsApp2
         private System.Windows.Forms.ToolStripMenuItem оттенкиСерогоToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem медианныйToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem autocontrastToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem thresholdToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem оттенкиСерогоToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem бинаризацияToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ниблэкToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem thresholdToolStripMenuItem;
     }
 }
 
