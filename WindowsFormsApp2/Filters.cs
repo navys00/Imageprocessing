@@ -215,6 +215,7 @@ namespace WindowsFormsApp2
         public Bitmap Threshold(Bitmap source, int value)//установка порога вручную
         {
             Bitmap resultimage = new Bitmap(source.Width, source.Height);
+            resultimage = source;
             for (int x = 0; x < source.Width; x++)
             {
                 for(int y = 0; y < source.Height; y++)
