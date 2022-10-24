@@ -227,7 +227,8 @@ namespace WindowsFormsApp2
             int s;//стандартное отклонение 
             int brightsum = 0;//сумма яркостей
             int T; //порог
-            for(int i = -radius; i <= radius; i++)
+            //вычисление порога
+            for (int i = -radius; i <= radius; i++)
             {
                 for(int j = -radius; j <= radius; j++)
                 {
@@ -239,6 +240,7 @@ namespace WindowsFormsApp2
                 }
             }
             m = (int)(brightsum / W);
+            
             brightsum = 0;
             for (int i = -radius; i <= radius; i++)
             {
@@ -365,14 +367,72 @@ namespace WindowsFormsApp2
             return resultImage;
 
         }
-        public int[] CalculateHistogram(Bitmap image)
+        public Bitmap HistogramExe(Bitmap source)//гистограмма
+        {
+            Bitmap resultimage = new Bitmap(source.Width, source.Height);
+           // resultimage = source;
+            int[] hist = CalculateHistogram(resultimage);
+            int histsum = hist.Sum();
+            int fv_perc = (int)(histsum * 0.05);
+
+            for(int i = 0; i < 255; i++)
+            {
+                if (hist[i] < fv_perc)
+                {
+                    fv_perc -= hist[i];
+                    hist[i] = 0;
+                }
+                else
+                {
+                    hist[i] -= fv_perc;
+                }
+                if (fv_perc == 0)
+                {
+                    break;
+                }
+
+            }
+            fv_perc = (int)(histsum * 0.05);
+
+            int weight = 0;
+            for(int i = 0; i < 255; i++)
+            {
+                if (hist[i] == 0)
+                {
+                    continue;
+                }
+                weight += hist[i] * i;
+            }
+            int T = (int)(weight/histsum);//порог
+            for (int x = 0; x <source.Width; x++)
+            {
+                for (int y = 0; y <source.Height; y++)
+                {
+                    Color color = source.GetPixel(x, y);
+                    if (color.R > T)
+                    {
+                        resultimage.SetPixel(x, y, Color.White);
+                    }
+                    else
+                    {
+                        resultimage.SetPixel(x, y, Color.Black);
+                    }
+
+                }
+            }
+
+
+
+            return resultimage;
+        }
+        public int[] CalculateHistogram(Bitmap source)
         {
             int[] histogram = new int[256];
-            for(int x = 0; x < image.Width; x++)
+            for(int x = 0; x < source.Width; x++)
             {
-                for(int y = 0; y < image.Height; y++)
+                for(int y = 0; y < source.Height; y++)
                 {
-                    Color color = image.GetPixel(x, y);
+                    Color color = source.GetPixel(x, y);
                     histogram[color.R]++;
                 }
             }
@@ -380,6 +440,125 @@ namespace WindowsFormsApp2
 
             return histogram;
         }
+
+        public float[] Uniform(int size)
+        {
+            int a = 2;
+            int b = 10;
+            float sum = 0;
+            float[] uniform = new float[256];
+            for (int i = 0; i < 256; i++)
+            {
+                
+                int step = i;
+                if (step >= a && step<=b)
+                {
+                    uniform[i] = (float)(1 / (b - a));
+                }
+                else
+                {
+                    uniform[i] = 0;
+                }
+                sum += uniform[i];
+            }
+
+            for (int i = 0; i < 256; i++)
+            {
+                uniform[i] /= sum;
+                uniform[i] *= size;
+                uniform[i] = (int)Math.Floor(uniform[i]);
+            }
+            return uniform;
+
+        }
+        public float[] GammaNoise( float size)
+        {
+            float a = 2;
+            float b = 10;
+            var Gamma = new float[256];
+            float sum = 0f;
+
+            for (int i = 0; i < 256; i++)
+            {
+                double step = (float)i * 0.01;
+                if (step >= 0)
+                {
+                    Gamma[i] = ((float)(double)(Math.Exp(-a * step) * (Math.Pow(a, b) * Math.Pow(step, b - 1)) / factorial(b - 1)));
+                }
+                else
+                {
+                    Gamma[i] = 0;
+                }
+                sum += Gamma[i];
+            }
+
+            for (int i = 0; i < 256; i++)
+            {
+                Gamma[i] /= sum;
+                Gamma[i] *= size;
+                Gamma[i] = (int)Math.Floor(Gamma[i]);
+            }
+
+            return Gamma;
+        }
+        public Bitmap Calculatenoise(Bitmap source, float[] uniform)
+        {
+            Bitmap resultimage = new Bitmap(source.Width, source.Height);
+            int size = source.Width * source.Height;
+            var noise = MakeNoise(uniform, size);
+            for (int x = 0; x < source.Width; x++)
+            {
+                for(int y = 0; y < source.Height; y++)
+                {
+                    Color color = source.GetPixel(x, y);
+
+                    resultimage.SetPixel(x, y, Color.FromArgb(clamp(color.R + noise[source.Width * y + x], 0, 255),
+                        clamp(color.G + noise[source.Width * y + x], 0, 255),
+                        clamp(color.B + noise[source.Width * y + x], 0, 255)));
+
+                }
+            }
+
+            return resultimage;
+        }
+        public byte[] MakeNoise(float[] uniform, int size)
+        {
+            int count = 0;
+            Random rnd = new Random();
+            var noise = new byte[size];
+            for(int i = 0; i < 256; i++)
+            {
+                for(int j = 0; j < (int)uniform[i]; j++)
+                {
+                    noise[j + count] = (byte)i;
+                }
+                count += (int)uniform[i];
+            }
+            for (int i = 0; i < size - count; i++)
+            {
+                noise[count + i] = 0;
+            }
+            noise = noise.OrderBy(x => rnd.Next()).ToArray();
+            return noise;
+
+        }
+        public Bitmap ExecuteHamma(Bitmap source)
+        {
+            return Calculatenoise(source, GammaNoise(source.Width * source.Height));
+        }
+        public Bitmap ExecuteUniform(Bitmap source)
+        {
+            return Calculatenoise(source, Uniform(source.Width * source.Height));
+        }
+        double factorial(double n)
+        {
+            if (n == 1) return 1;
+
+            return n * factorial(n - 1);
+        }
+
+
+
     }
 }
 

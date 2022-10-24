@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace WindowsFormsApp2
 {
     public partial class Form1 : Form
@@ -118,6 +119,30 @@ namespace WindowsFormsApp2
         {
             Filter filter = new Filter();
             Bitmap resultImage = filter.Niblack(image);
+            pictureBox1.Image = resultImage;
+            pictureBox1.Refresh();
+        }
+
+        private void гистограммаToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Filter filter = new Filter();
+            Bitmap resultImage = filter.HistogramExe(image);
+            pictureBox1.Image = resultImage;
+            pictureBox1.Refresh();
+        }
+
+        private void гаммаToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Filter filter = new Filter();
+            Bitmap resultImage = filter.ExecuteHamma(image);
+            pictureBox1.Image = resultImage;
+            pictureBox1.Refresh();
+        }
+
+        private void равномерныйToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Filter filter = new Filter();
+            Bitmap resultImage = filter.ExecuteUniform(image);
             pictureBox1.Image = resultImage;
             pictureBox1.Refresh();
         }
