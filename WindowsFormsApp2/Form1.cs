@@ -14,6 +14,7 @@ namespace WindowsFormsApp2
     public partial class Form1 : Form
     {
         Bitmap image;
+        Bitmap secondimage;
         public Form1()
         {
             InitializeComponent();
@@ -145,6 +146,36 @@ namespace WindowsFormsApp2
             Bitmap resultImage = filter.ExecuteUniform(image);
             pictureBox1.Image = resultImage;
             pictureBox1.Refresh();
+        }
+
+        private void билатериальныйШутерToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Filter filter = new Filter();
+            Bitmap resultImage = filter.Gaussexecute(image);
+            pictureBox1.Image = resultImage;
+            pictureBox1.Refresh();
+        }
+
+        private void билетариальныйФильтрToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Filter filter = new Filter();
+            Bitmap resultImage = filter.BilaterialExecute(image);
+            pictureBox1.Image = resultImage;
+            pictureBox1.Refresh();
+        }
+
+        private void sSIMToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Filter filter = new Filter();
+            MessageBox.Show(filter.ExecuteSSIM((Bitmap)pictureBox1.Image, image).ToString());
+            //pictureBox1.Image = resultImage;
+            //pictureBox1.Refresh();
+        }
+
+        private void pSNRToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Filter filter = new Filter();
+            MessageBox.Show(filter.ExecuteSSIM((Bitmap)pictureBox1.Image, image).ToString());
         }
     }
 }
