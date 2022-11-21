@@ -8,3 +8,4 @@ D:\вуз - 2 курс\проекты  с vs\WindowsFormsApp2\obj\Debug\WindowsF
 D:\вуз - 2 курс\проекты  с vs\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.csproj.CoreCompileInputs.cache
 D:\вуз - 2 курс\проекты  с vs\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.exe
 D:\вуз - 2 курс\проекты  с vs\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.pdb
+D:\вуз - 2 курс\проекты  с vs\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.Hist.resources

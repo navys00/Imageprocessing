@@ -440,6 +440,16 @@ namespace WindowsFormsApp2
 
             return histogram;
         }
+        int[] uniint;
+        float[] uni;
+        public int[] CalculateHistogramPrint()
+        {
+            uniint = new int[uni.Length];
+            for (int i = 0; i < uni.Length; i++)
+                uniint[i] = (int)uni[i];
+            return uniint;
+        }
+
 
         public float[] Uniform(int size)
         {

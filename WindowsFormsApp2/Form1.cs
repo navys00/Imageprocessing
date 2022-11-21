@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-
 namespace WindowsFormsApp2
 {
     public partial class Form1 : Form
@@ -176,6 +175,29 @@ namespace WindowsFormsApp2
         {
             Filter filter = new Filter();
             MessageBox.Show(filter.ExecuteSSIM((Bitmap)pictureBox1.Image, image).ToString());
+        }
+
+        private void гистограммаToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (image == null) return;
+            Filter filter = new Filter();
+            Hist frame = new Hist(CalculateHistogram((Bitmap)pictureBox1.Image));
+            frame.Show();
+        }
+        public int[] CalculateHistogram(Bitmap source)
+        {
+            int[] histogram = new int[256];
+            for (int x = 0; x < source.Width; x++)
+            {
+                for (int y = 0; y < source.Height; y++)
+                {
+                    Color color = source.GetPixel(x, y);
+                    histogram[color.R]++;
+                }
+            }
+
+
+            return histogram;
         }
     }
 }
