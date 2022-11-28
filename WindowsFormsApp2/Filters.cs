@@ -442,45 +442,12 @@ namespace WindowsFormsApp2
         }
         int[] uniint;
         float[] uni;
-        public int[] CalculateHistogramPrint()
-        {
-            uniint = new int[uni.Length];
-            for (int i = 0; i < uni.Length; i++)
-                uniint[i] = (int)uni[i];
-            return uniint;
-        }
 
 
-        public float[] Uniform(int size)
-        {
-            int a = 32;
-            int b = 120;
-            float sum = 0f;
-            float[] uniform = new float[256];
-            for (int i = 0; i < 256; i++)
-            {
-                
-                int step = i;
-                if (step >= a && step<=b)
-                {
-                    uniform[i] = (1 / (float)(b - a));
-                }
-                else
-                {
-                    uniform[i] = 0;
-                }
-                sum += uniform[i];
-            }
+      
 
-            for (int i = 0; i < 256; i++)
-            {
-                uniform[i] /= sum;
-                uniform[i] *= size;
-                uniform[i] = (int)Math.Floor(uniform[i]);
-            }
-            return uniform;
-
-        }
+        
+        
         public float[] GammaNoise( float size)
         {
             float a = 2;
@@ -556,14 +523,14 @@ namespace WindowsFormsApp2
             noise = noise.OrderBy(x => rnd.Next()).ToArray();
             return noise;
         }
-        public Bitmap ExecuteHamma(Bitmap source)
-        {
-            return Calculatenoise(source, GammaNoise(source.Width * source.Height));
-        }
-        public Bitmap ExecuteUniform(Bitmap source)
-        {
-            return Calculatenoise(source, Uniform(source.Width * source.Height));
-        }
+        //public Bitmap ExecuteHamma(Bitmap source)
+        //{
+        //    return Calculatenoise(source, GammaNoise(source.Width * source.Height));
+        //}
+        //public Bitmap ExecuteUniform(Bitmap source)
+        //{
+        //    return Calculatenoise(source, Uniform(source.Width * source.Height));
+        //}
         double factorial(double n)
         {
             if (n == 1) return 1;

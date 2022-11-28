@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Noise;
 
 namespace WindowsFormsApp2
 {
@@ -14,6 +15,7 @@ namespace WindowsFormsApp2
     {
         Bitmap image;
         Bitmap secondimage;
+        
         public Form1()
         {
             InitializeComponent();
@@ -134,7 +136,7 @@ namespace WindowsFormsApp2
         private void гаммаToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Filter filter = new Filter();
-            Bitmap resultImage = filter.ExecuteHamma(image);
+            Bitmap resultImage = Gamma.Execute(image);
             pictureBox1.Image = resultImage;
             pictureBox1.Refresh();
         }
@@ -142,7 +144,7 @@ namespace WindowsFormsApp2
         private void равномерныйToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Filter filter = new Filter();
-            Bitmap resultImage = filter.ExecuteUniform(image);
+            Bitmap resultImage = Uniform.Execute(image);
             pictureBox1.Image = resultImage;
             pictureBox1.Refresh();
         }
@@ -180,25 +182,11 @@ namespace WindowsFormsApp2
         private void гистограммаToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             if (image == null) return;
-            Filter filter = new Filter();
-            Hist frame = new Hist(CalculateHistogram((Bitmap)pictureBox1.Image));
+            //Filter filter = new Filter();
+            Hist frame = new Hist(Additivemodels.CalculateHistogram());
             frame.Show();
         }
-        public int[] CalculateHistogram(Bitmap source)
-        {
-            int[] histogram = new int[256];
-            for (int x = 0; x < source.Width; x++)
-            {
-                for (int y = 0; y < source.Height; y++)
-                {
-                    Color color = source.GetPixel(x, y);
-                    histogram[color.R]++;
-                }
-            }
-
-
-            return histogram;
-        }
+        
     }
 }
 

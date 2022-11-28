@@ -47,6 +47,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Noise\Gamma.cs" />
+    <Compile Include="Noise\Models\Additivemodels.cs" />
+    <Compile Include="Noise\Uniform.cs" />
     <Compile Include="Filters.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
